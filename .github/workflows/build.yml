@@ -1,0 +1,43 @@
+name: Build React App
+on:
+  push:
+    branches:
+      - main
+    # paths-ignore:
+    #   - '.github/workflows/*'
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Get the repository code
+        uses: actions/checkout@v4
+      - name: Cache deps
+        uses: actions/cache@v4
+        with:
+          path: ~/.npm
+          key: node-modules-${{ hashFiles('**/packcage-lock.json') }}
+      - name: Install dependecies
+        run: npm ci
+      - name: Test app
+        run: npm run test
+  build:
+    runs-on: ubuntu-latest
+    needs: test
+    steps:
+      - name: Get the repository code
+        uses: actions/checkout@v4
+      - name: Cache deps
+        uses: actions/cache@v4
+        with:
+          path: ~/.npm
+          key: node-modules-${{ hashFiles('**/packcage-lock.json') }}
+      - name: Install dependecies
+        run: npm ci
+      - name: Build app
+        run: npm run build
+  print:
+    runs-on: ubuntu-latest
+    needs: build
+    steps:
+      - name: Print to console
+        run: echo Build is ok!
