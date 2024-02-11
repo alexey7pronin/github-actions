@@ -31,7 +31,7 @@ jobs:
       - name: Get the repository code
         uses: actions/checkout@v4
       - name: Install Node Js
-        uses: actoins/setup-node@v4
+        uses: actions/setup-node@v4
         with:
           node-version: ${{ matrix.node-version }}
       - name: Cache deps
