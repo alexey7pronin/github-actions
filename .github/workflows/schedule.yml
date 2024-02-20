@@ -15,11 +15,3 @@ jobs:
               repo: context.repo.repo,
             })
             console.log(issuesList)
-            # for (const issue of issuesList) {
-            #   const issueComments = await github.rest.issues.listComments({
-            #     owner: context.repo.owner,
-            #     repo: context.repo.repo,
-            #     issue_number: issue.number,
-            #   });
-            #   console.log(issueEvents)
-            # }
