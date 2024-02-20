@@ -36,7 +36,7 @@ jobs:
                     const lastComment = await github.rest.issues.getComment({
                       owner: context.repo.owner,
                       repo: context.repo.repo,
-                      comment_id: issueComments[issueComments.data.length - 1].id,
+                      comment_id: issueComments.data[issueComments.data.length - 1].id,
                     });
                     console.log(lastComment);
                   }
