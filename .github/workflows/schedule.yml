@@ -29,6 +29,9 @@ jobs:
                     repo: context.repo.repo,
                     issue_number: issue.number,
                   });
+                  console.log(issueComments);
+                  console.log(issueComments.length);
+
                   if (issueComments.length) {
                     const lastComment = await github.rest.issues.getComment({
                       owner: context.repo.owner,
