@@ -10,10 +10,11 @@ jobs:
         id: get-issues
         with:
           script: |
-            return github.rest.issues.listForRepo({
+            const issuesList = github.rest.issues.listForRepo({
               owner: context.repo.owner,
               repo: context.repo.repo,
             })
-          result-encoding: json
-      - name: Get result
-        run: echo "${{ steps.get-issues.outputs.result }}"
+
+            for (const issue of issuesList) {
+              console.log(issue)
+            }
