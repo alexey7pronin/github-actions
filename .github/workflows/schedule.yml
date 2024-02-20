@@ -30,13 +30,13 @@ jobs:
                     issue_number: issue.number,
                   });
                   console.log(issueComments);
-                  console.log(issueComments.length);
+                  console.log(issueComments.data.length);
 
-                  if (issueComments.length) {
+                  if (issueComments.data.length) {
                     const lastComment = await github.rest.issues.getComment({
                       owner: context.repo.owner,
                       repo: context.repo.repo,
-                      comment_id: issueComments[issueComments.length - 1].id,
+                      comment_id: issueComments[issueComments.data.length - 1].id,
                     });
                     console.log(lastComment);
                   }
