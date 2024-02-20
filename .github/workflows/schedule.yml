@@ -8,4 +8,10 @@ jobs:
       - name: View github rest
         uses: actions/github-script@v7
         with:
-          script: console.log(github.rest.issues.listForRepo({alexey7pronin, git@github.com:alexey7pronin/github-actions}))
+          script: |
+            const issuesList = github.rest.issues.listForRepo({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+            })
+
+            console.log(issuesList)
