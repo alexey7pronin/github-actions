@@ -8,4 +8,4 @@ jobs:
       - name: View github rest
         uses: actions/github-script@v7
         with:
-          script: console.log(github.rest)
+          script: console.log(github.rest.issues.get())
