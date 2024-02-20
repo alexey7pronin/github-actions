@@ -15,15 +15,28 @@ jobs:
               repo: context.repo.repo,
             })
 
-            console.log(issuesList)
-
             if (issuesList.data && issuesList.status === 200) {
               for (const issue of issuesList.data) {
-                const issueComments = await github.rest.issues.listComments({
-                  owner: context.repo.owner,
-                  repo: context.repo.repo,
-                  issue_number: issue.number,
-                });
-                console.log(issueComments)
+                if (issue.pull_request) {
+                  const pullComments = await github.rest.pulls.listReviewComments({
+                    owner: context.repo.owner,
+                    repo: context.repo.repo,
+                    pull_number: issue.number,
+                  });
+                } else {
+                  const issueComments = await github.rest.issues.listComments({
+                    owner: context.repo.owner,
+                    repo: context.repo.repo,
+                    issue_number: issue.number,
+                  });
+                  if (issueComments.length) {
+                    const lastComment = await github.rest.issues.getComment({
+                      owner: context.repo.owner,
+                      repo: context.repo.repo,
+                      comment_id: issueComments[issueComments.length - 1].id,
+                    });
+                    console.log(lastComment);
+                  }
+                }
               }
             }
