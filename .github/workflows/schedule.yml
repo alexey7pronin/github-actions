@@ -15,6 +15,4 @@ jobs:
               repo: context.repo.repo,
             })
 
-            for (const issue of issuesList) {
-              console.log(issue)
-            }
+            console.log(issuesList)
