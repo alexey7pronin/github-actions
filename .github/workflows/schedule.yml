@@ -14,9 +14,10 @@ jobs:
               owner: context.repo.owner,
               repo: context.repo.repo,
             })
-            console.log(issuesList);
+            console.log('issuesList', issuesList);
             if (issuesList.data && issuesList.status === 200) {
               for (const issue of issuesList.data) {
+                console.log('labels', issue.labels);
                 if (issue.pull_request) {
                   const pullComments = await github.rest.pulls.listReviewComments({
                     owner: context.repo.owner,
@@ -29,8 +30,7 @@ jobs:
                     repo: context.repo.repo,
                     issue_number: issue.number,
                   });
-                  console.log(issueComments);
-                  console.log(issueComments.data.length);
+                  console.log('issueComments', issueComments);
 
                   if (issueComments.data.length) {
                     const lastComment = await github.rest.issues.getComment({
@@ -38,7 +38,7 @@ jobs:
                       repo: context.repo.repo,
                       comment_id: issueComments.data[issueComments.data.length - 1].id,
                     });
-                    console.log(lastComment);
+                    console.log('lastComment', lastComment);
                   }
                 }
               }
