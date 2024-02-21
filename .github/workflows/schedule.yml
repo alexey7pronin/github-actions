@@ -14,7 +14,7 @@ jobs:
               owner: context.repo.owner,
               repo: context.repo.repo,
             })
-
+            console.log(issuesList);
             if (issuesList.data && issuesList.status === 200) {
               for (const issue of issuesList.data) {
                 if (issue.pull_request) {
