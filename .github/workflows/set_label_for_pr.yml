@@ -17,7 +17,7 @@ jobs:
             console.log('issuesList', issuesList);
             if (issuesList.data && issuesList.status === 200) {
               for (const issue of issuesList.data) {
-                if (issue.pull_request && !labels.length) {
+                if (issue.pull_request && !issue.labels.length) {
                   await github.rest.issues.setLabels({
                     owner: context.repo.owner,
                     repo: context.repo.repo,
