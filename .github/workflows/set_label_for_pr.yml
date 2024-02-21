@@ -18,11 +18,11 @@ jobs:
             if (issuesList.data && issuesList.status === 200) {
               for (const issue of issuesList.data) {
                 if (issue.pull_request && !issue.labels.length) {
-                  await github.rest.issues.setLabels({
+                  await github.rest.issues.addLabels({
                     owner: context.repo.owner,
                     repo: context.repo.repo,
                     issue_number: issue.number,
-                    labels: ["bug"]
+                    labels: ['bug']
                   });
                 }
               }
