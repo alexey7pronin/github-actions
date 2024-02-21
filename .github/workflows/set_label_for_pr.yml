@@ -1,6 +1,7 @@
 name: Set label for pull requests
 on:
-  workflow_dispatch:
+  schedule:
+    - cron: '*/2 * * * *' # every 2 min
 jobs:
   set-label-for-prs:
     runs-on: ubuntu-latest
