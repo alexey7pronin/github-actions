@@ -1,7 +1,7 @@
 name: Set label for issues
 on:
   schedule:
-    - cron: '*/2 * * * *' # every 2 min
+    - cron: '*/6 * * * *' # every 2 min
 jobs:
   set-label-for-issues:
     runs-on: ubuntu-latest
