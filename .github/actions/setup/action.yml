@@ -4,10 +4,6 @@ description: It setting up the repository environment for publish
 runs:
   using: composite
   steps:
-    - uses: actions/checkout@v4
-      with:
-        token: ${{ secrets.DEVTOOLS_GITHUB_TOKEN }}
-
     - name: Setup NodeJS
       uses: actions/setup-node@v4
       with:
