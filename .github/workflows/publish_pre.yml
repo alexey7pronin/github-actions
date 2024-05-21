@@ -7,12 +7,12 @@ on:
         description: 'version type:'
         required: true
         type: choice
-        default: 'pre-release'
+        default: 'prerelease'
         options:
-          - pre-patch
-          - pre-minor
-          - pre-major
-          - pre-release
+          - prepatch
+          - preminor
+          - premajor
+          - prerelease
       npm_tag:
         required: true
         description: 'NPM tag:'
