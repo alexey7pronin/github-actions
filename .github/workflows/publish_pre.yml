@@ -3,38 +3,53 @@ name: 'Publish (pre-release)'
 on:
   workflow_dispatch:
     inputs:
-      tag:
+      new_version:
+        description: 'version type (use prerelease for bumping pre-release version):'
         required: true
-        description: 'tag ("beta" or "alpha"):'
+        type: choice
+        default: 'prerelease'
+        options:
+          - pre-patch
+          - pre-minor
+          - pre-major
+          - pre-release
+      npm_tag:
+        required: true
+        description: 'NPM tag:'
         type: choice
         default: 'beta'
         options:
-          - beta
           - alpha
-      version:
-        description: 'version: x.y.z-beta.0 or x.y.z-alpha.0 (without "v")'
-        required: true
+          - beta
+          - rc
+      custom_version:
+        description: 'use syntax x.y.z-beta.0, without "v" (it ignore "version type" parameter):'
+        required: false
+
+run-name: Publish pre-release create-vk-mini-app ${{ inputs.new_version }} ${{ inputs.custom_version }}
 
 jobs:
   publish:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - name: Checkout
+        uses: actions/checkout@v4
         with:
           token: ${{ secrets.DEVTOOLS_GITHUB_TOKEN }}
 
       - name: Setting up the repository environment
         uses: ./.github/actions/setup
 
-      - run: yarn version --new-version "${{ github.event.inputs.version }}" --no-commit-hooks
-
-      - name: Pushing changes
-        uses: ad-m/github-push-action@master
+      - name: Bump version
+        uses: ./.github/actions/bump-version
         with:
-          github_token: ${{ secrets.DEVTOOLS_GITHUB_TOKEN }}
-          branch: ${{ github.ref }}
+          version: ${{ github.event.inputs.custom_version || github.event.inputs.new_version }}
+          npm_tag: ${{ github.event.inputs.npm_tag }}
 
-      - name: Publishing release
-        run: yarn publish --access public --non-interactive --tag ${{ github.event.inputs.tag }}
-        env:
-          NODE_AUTH_TOKEN: ${{ secrets.NPMJS_PUBLISH_TOKEN }}
+      - name: Complete publish
+        uses: ./.github/actions/complete-publish
+        with:
+          branch: ${{ github.ref }}
+          prev_version: ${{ steps.updated_versions_info.outputs.prev_version }}
+          next_version: ${{ steps.updated_versions_info.outputs.next_version }}
+          npm_tag: ${{ github.event.inputs.npm_tag }}
