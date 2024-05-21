@@ -4,10 +4,10 @@ on:
   workflow_dispatch:
     inputs:
       new_version:
-        description: 'version type (use prerelease for bumping pre-release version):'
+        description: 'version type:'
         required: true
         type: choice
-        default: 'prerelease'
+        default: 'pre-release'
         options:
           - pre-patch
           - pre-minor
