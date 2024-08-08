@@ -1,14 +1,14 @@
 name: Set label for issues and pull request
 on:
   schedule:
-    - cron: '0 11 */2 * *'
+    - cron: '*/6 * * * *' # e
     - cron: '0 11 */7 * *'
 jobs:
   set-label-for-issues:
     runs-on: ubuntu-latest
     steps:
       - name: Set label for issues
-        if: github.event.schedule == '0 11 */2 * *'
+        if: github.event.schedule == '*/6 * * * *'
         uses: actions/github-script@v7
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
